@@ -169,6 +169,9 @@ class TaskResultMeta(models.Model):
         verbose_name = _("task state")
         verbose_name_plural = _("task states")
         db_table = "celery_taskresultmeta"
+        index_together = [
+            ['status', 'date_done']
+        ]
 
     def to_dict(self):
         return {"task_id": self.task_id,
