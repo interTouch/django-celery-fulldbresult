@@ -1,5 +1,8 @@
 from datetime import timedelta, datetime, tzinfo
 from uuid import uuid4
+from django.test import TestCase
+from django_celery_fulldbresult.models import TaskResultMeta
+
 
 from celery.states import PENDING
 
@@ -328,3 +331,13 @@ class CommandTest(TransactionTestCase):
         do_something.apply_async(
             kwargs={"param": "testing"}, eta=a_date)
         call_command("find_stale_scheduled_tasks", microseconds=1)
+
+
+
+
+class TestModels(TestCase):
+     def test_task_result_meta_indexes(self):
+         self.assertEqual(TaskResultMeta._meta.index_together, 
+             ((u'status', u'date_done'), (u'task', u'date_done'))
+         )
+

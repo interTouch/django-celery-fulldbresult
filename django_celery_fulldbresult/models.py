@@ -170,7 +170,8 @@ class TaskResultMeta(models.Model):
         verbose_name_plural = _("task states")
         db_table = "celery_taskresultmeta"
         index_together = [
-            ['status', 'date_done']
+            ['status', 'date_done'],
+            ['task', 'date_done']
         ]
 
     def to_dict(self):
